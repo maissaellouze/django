@@ -7,8 +7,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}">
     <noscript><link rel="stylesheet" type="text/css" href="{% static 'assets/css/noscript.css' %}"></noscript>
 <meta charset='utf-8'>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRyzUB8V-Ie1AF9FRmbPkPS6tTpJx07JE&callback=initMap"></script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRyzUB8V-Ie1AF9FRmbPkPS6tTpJx07JE&callback=initMap"></script>
 
   <!-- Ajouter les fichiers JavaScript ici -->
@@ -49,7 +47,8 @@
 {% endblock %}
 </head>
 <body class="light-mode">
-   
+    <div id="map"></div>
+                <div id="map" style="height: 400px; width: 100%;"></div>
 
 
 <script>
@@ -184,8 +183,21 @@
                     <li><a href="https://github.com/maissaellouze" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
                   
                 </ul>
-          
+                <div id="map"></div>
+                <div id="map" style="height: 400px; width: 100%;"></div>
 
+
+<script>
+  function initMap() {
+  var mapOptions = {
+    center: {lat: 48.8584, lng: 2.2945},
+    zoom: 15
+  };
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 
             </section>
             <ul class="copyright">
