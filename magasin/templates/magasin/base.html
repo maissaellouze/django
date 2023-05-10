@@ -1,0 +1,246 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}">
+    <noscript><link rel="stylesheet" type="text/css" href="{% static 'assets/css/noscript.css' %}"></noscript>
+<meta charset='utf-8'>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRyzUB8V-Ie1AF9FRmbPkPS6tTpJx07JE&callback=initMap"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRyzUB8V-Ie1AF9FRmbPkPS6tTpJx07JE&callback=initMap"></script>
+
+  <!-- Ajouter les fichiers JavaScript ici -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>
+{% block title %} {% endblock %}
+</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/base.css'%}">
+{% block styles %} 
+<style>
+    /* Add styles for dark mode here */
+    body.dark-mode {
+      background-color: #333;
+      color: #fff;
+    }
+    .product-details.dark-mode {
+    border: 2px solid #fff;
+    }
+    
+    /* Hide the light mode button in dark mode */
+    .product-details.dark-mode .toggle-mode.light-mode {
+    display: none;
+    }
+    
+    /* Hide the dark mode button in light mode */
+    .product-details.light-mode .toggle-mode.dark-mode {
+    display: none;
+    }
+    </style>
+{% endblock %}
+</head>
+<body class="light-mode">
+   
+
+
+<script>
+  function initMap() {
+  var mapOptions = {
+    center: {lat: 48.8584, lng: 2.2945},
+    zoom: 15
+  };
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+</script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" color="black">
+           
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Maissa Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'categorie_list' %}">Catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'fournisseur_list' %}">Fournisseurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'commande_list' %}">Commandes</a>
+                </li>
+               
+                  
+                {% if user.is_authenticated %}
+                
+                
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+                </li>
+                <li class="nav-item active">
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav font-weight-bold mx-auto py-0">
+                            
+                
+                            <div class="profile-details">
+                        
+                        Bienvenue
+                                <span class="admin_name">
+                                    {{user}}
+                                </span>
+                                
+                        </div>
+                    
+                </li>
+
+                {% else %}
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                </li>
+                <li class="nav-item active">
+                    <div>
+                        <small>
+                        Pas encore inscrit.e?
+                        <a href="{% url 'register' %}"> S'inscrire </a></div>
+                </li>
+                {% endif %}
+
+            </ul>
+            <form class="form-inline ml-auto" method="GET" action="{% url 'search' %}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" name="q">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Rechercher</button>
+            </form>
+            {% comment %} <div class="form-inline ml-auto">
+                <button class="btn toggle-mode light-mode" onclick="toggleDarkMode()">Dark Mode</button>
+                <button class="btn toggle-mode dark-mode" onclick="toggleLightMode()">Light Mode</button>
+            </div>
+             {% endcomment %}
+             
+        </div>
+    </nav>
+    <script>
+        function toggleDarkMode() {
+            $('body').removeClass('light-mode');
+            $('body').addClass('dark-mode');
+        }
+        
+        function toggleLightMode() {
+            $('body').removeClass('dark-mode');
+            $('body').addClass('light-mode');
+        }        
+    </script>
+{% block content %}{% endblock %}
+<footer>
+
+
+
+
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <h2>Get in touch</h2>
+                {% if message %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+                <form method="post" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <div class="fields">
+                        <div class="field half">
+                            <input type="text" name="name" id="name" placeholder="Name" />
+                        </div>
+                        <div class="field half">
+                            <input type="email" name="email" id="email" placeholder="Email" />
+                        </div>
+                        <div class="field">
+                            <textarea name="message" id="message" placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Send" class="primary" /></li>
+                    </ul>
+
+                </form>
+            </section>
+            <section>
+                <h2>Follow</h2>
+                <ul class="icons">
+                    <li><a href="https://www.facebook.com/profile.php?id=100012522974416" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://www.instagram.com/maissa_ellouze/" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                   
+                    <li><a href="https://github.com/maissaellouze" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+                  
+                </ul>
+          
+
+
+            </section>
+            <ul class="copyright">
+                <li>&copy; Untitled. All rights reserved</li><li>Design and prepared by Maissa ELLOUZE</a></li>
+            </ul>
+
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/browser.min.js' %}"></script>
+<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'assets/js/util.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+    
+    
+</footer>
+</body>
+<style>
+    .profile-details{
+display: flex;
+align-items: center;
+background:#7AC9D6;
+border: 2px solid #EFEEF1;
+border-radius: 6px;
+height: 50px;
+min-width: 220px;
+padding: 0 15px 0 2px;
+}
+.profile-details .admin_name{
+font-size: 15px;
+font-weight: 500;
+color: #333;
+margin: 0 10px;
+white-space: nowrap;
+border-radius: 20px;
+
+}
+.profile-details i{
+font-size: 25px;
+color: #333;
+}
+ </style>
+
+</html>

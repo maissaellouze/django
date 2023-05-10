@@ -1,0 +1,66 @@
+{% extends './base.html' %}
+
+{% block title %} Product Catalog {% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="display-4 mb-4 fw-bold text-center">Discover our products</h1>
+  
+  <center><a href="{% url 'addproduct' %}" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Add Product</a></center>
+  <br>
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img class="card-img-top product-image" src="/media/{{product.imag}}" alt="{{ product.libelle }}">
+        <div class="card-body">
+          <h5 class="display-4 mb-4 fw-bold text-center">{{ product.libelle }}</h5>
+          <p class="fw-bold text-center">{{ product.description }}</p>
+          <center>
+            <a href="{% url 'produit_detail' product.id %}" class="btn btn-outline-success my-2 my-sm-0" type="submit">More>></a>
+            <a href="{% url 'edit_product' product.id %}" class="btn btn-outline-warning my-2 my-sm-0" type="submit">Update>></a>
+            <a href="{% url 'delete_product' product.id %}"class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</a>
+
+         
+        </center>           
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    
+  </div> 
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+  .product-image {
+    height: 400px;
+    object-fit: cover;
+  }
+  .card {
+    border: none;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  .card:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  }
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  .card-text {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+</style>
+{% endblock %}
